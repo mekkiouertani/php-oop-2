@@ -17,7 +17,7 @@
                 </div>
             </div>
             <small>
-                <?php include __DIR__ . '/../Model/Genre.php' ?>
+                <?php include __DIR__ . '/../Control/Genre.php' ?>
             </small>
         </div>
     </div>

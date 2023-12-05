@@ -70,7 +70,7 @@ class Movie
 }
 
 // Leggi il contenuto del file JSON che contiene i dati dei film
-$movieString = file_get_contents(__DIR__ . '/db.json');
+$movieString = file_get_contents(__DIR__ . '/../Model/db.json');
 $movieList = json_decode($movieString, true);
 
 // Inizializza un array vuoto per i film
