@@ -6,19 +6,25 @@
                 <?= $title ?>
             </h5>
             <p class="card-text">
-                <?= $content ?>
+                <?php if (isset($content)) {
+                    echo $content;
+                }
+                ; ?>
             </p>
             <div class="d-flex justify-content-between align-items-flex-start">
-                <?= $custom ?>
+                <?php if (isset($custom)) {
+                    echo $custom;
+                }
+                ; ?>
                 <div>
                     <small>
-                        <img src="<?= $language ?>" alt="flag">
+                        <img src="<?php if (isset($language)) {
+                            echo $language;
+                        }
+                        ; ?>" alt="">
                     </small>
                 </div>
             </div>
-            <small>
-                <?php include __DIR__ . '/../Control/Genre.php' ?>
-            </small>
         </div>
     </div>
 </div>
