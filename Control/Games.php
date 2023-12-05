@@ -1,5 +1,6 @@
 <?php
-class Games
+include __DIR__ . "/Product.php";
+class Games extends Product
 {
     public int $appid;
     public string $name;
