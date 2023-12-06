@@ -24,6 +24,12 @@
                         ; ?>" alt="">
                     </small>
                 </div>
+                <p>
+                    <?php if (isset($price)) {
+                        echo $price;
+                    }
+                    ; ?>
+                </p>
             </div>
         </div>
     </div>
