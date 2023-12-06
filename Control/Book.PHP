@@ -22,9 +22,9 @@ class Book extends Product {
             if($this->price < 100) {
                 throw new Exception("Il prezzo non può essere inferiore a 100");
             }
-            $this->price = "€".number_format($this->price, 2);
+            return "€".number_format($this->price, 2);
         } catch (Exception $e) {
-            $this->price = $e->getMessage();
+            return $e->getMessage();
         }
     }
     public function formatCard() {
