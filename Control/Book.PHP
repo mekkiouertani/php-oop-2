@@ -18,10 +18,14 @@ class Book extends Product {
         $this->categories = $categories;
     }
     public function getFormattedPrice() {
-        if($this->price < 100) {
-            throw new Exception("Il prezzo non può essere inferiore a 20");
+        try {
+            if($this->price < 100) {
+                throw new Exception("Il prezzo non può essere inferiore a 100");
+            }
+            $this->price = "€".number_format($this->price, 2);
+        } catch (Exception $e) {
+            $this->price = $e->getMessage();
         }
-        return "€".number_format($this->price, 2);
     }
     public function formatCard() {
         $cardItem = [

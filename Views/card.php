@@ -25,11 +25,8 @@
                     </small>
                 </div>
                 <p>
-                    <?php try {
-                        echo $price;
-                    } catch (Exception $e) {
-                        echo $e->getMessage();
-                    } ?>
+                    <?php echo $price ?>
+
                 </p>
             </div>
             <small>
