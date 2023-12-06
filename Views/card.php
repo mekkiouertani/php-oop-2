@@ -6,26 +6,26 @@
                 <?= $title ?>
             </h5>
             <p class="card-text">
-                <?php if (isset($content)) {
+                <?php if(isset($content)) {
                     echo $content;
                 }
                 ; ?>
             </p>
             <div class="d-flex justify-content-between align-items-flex-start">
-                <?php if (isset($custom)) {
+                <?php if(isset($custom)) {
                     echo $custom;
                 }
                 ; ?>
                 <div>
                     <small>
-                        <img src="<?php if (isset($language)) {
+                        <img src="<?php if(isset($language)) {
                             echo $language;
                         }
                         ; ?>" alt="">
                     </small>
                 </div>
                 <p>
-                    <?php if (isset($price)) {
+                    <?php if(isset($price)) {
                         echo $price;
                     }
                     ; ?>

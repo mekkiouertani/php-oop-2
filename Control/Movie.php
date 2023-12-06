@@ -1,6 +1,6 @@
 <?php
-class Movie
-{
+include __DIR__."/Product.php";
+class Movie extends Product {
     // Attributi privati della classe Movie
     private int $id;
     private string $title;
@@ -11,9 +11,9 @@ class Movie
     private $genre_ids;
 
     // Costruttore della classe Movie
-    function __construct($id, $title, $overview, $vote, $image, $language, $genre)
-    {
+    function __construct($id, $title, $overview, $vote, $image, $language, $genre, $price) {
         // Inizializza le proprietà con i valori passati al costruttore
+        parent::__construct($price, self::getDiscount());
         $this->id = $id;
         $this->title = $title;
         $this->overview = $overview;
@@ -22,32 +22,32 @@ class Movie
         $this->original_language = $language;
         $this->genre_ids = $genre;
     }
-
+    private function getFormattedPrice() {
+        return "€".number_format($this->price, 2); //formatta il prezzo con due decimali e aggiungi il simbolo del dollaro
+    }
     // Metodo per ottenere la bandiera del paese
-    public function getFlagApi()
-    {
+    public function getFlagApi() {
         $apiFlag = strtoupper(substr($this->original_language, 0, 2));
 
-        if ($apiFlag === "EN") {
+        if($apiFlag === "EN") {
             $apiFlag = "GB";
-        } elseif ($apiFlag === "JA") {
+        } elseif($apiFlag === "JA") {
             $apiFlag = "JP";
-        } elseif ($apiFlag === "DA") {
+        } elseif($apiFlag === "DA") {
             $apiFlag = "CA";
-        } elseif ($apiFlag === "ZH") {
+        } elseif($apiFlag === "ZH") {
             $apiFlag = "ES";
-        } elseif ($apiFlag === "HI") {
+        } elseif($apiFlag === "HI") {
             $apiFlag = "CL";
         }
-        return $this->currentFlag = "https://flagsapi.com/" . $apiFlag . "/flat/64.png";
+        return $this->currentFlag = "https://flagsapi.com/".$apiFlag."/flat/64.png";
     }
 
     // Metodo per ottenere la rappresentazione visuale del voto
-    public function getVote()
-    {
+    public function getVote() {
         $vote = ceil($this->vote_average / 2);
         $template = "<p>";
-        for ($n = 1; $n <= 5; $n++) {
+        for($n = 1; $n <= 5; $n++) {
             $template .= ($n <= $vote) ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>';
         }
         $template .= "</p>";
@@ -55,29 +55,31 @@ class Movie
     }
 
     // Metodo per stampare la card del film
-    public function printCard()
-    {
+    public function printCard() {
         // Ottieni i dati necessari e includi il file di visualizzazione
         $image = $this->poster_path;
         $title = $this->title;
-        $content = substr($this->overview, 0, 100) . '...';
+        $content = substr($this->overview, 0, 100).'...';
         $custom = $this->getVote();
         $language = $this->getFlagApi();
         $genre = $this->genre_ids;
-        include __DIR__ . '/../Views/card.php';
+        $price = $this->getFormattedPrice();
+        include __DIR__.'/../Views/card.php';
     }
 
-}
+    public static function fetchAll() {
+        // Leggi il contenuto del file JSON che contiene i dati dei film
+        $movieString = file_get_contents(__DIR__.'/../Model/db.json');
+        $movieList = json_decode($movieString, true);
 
-// Leggi il contenuto del file JSON che contiene i dati dei film
-$movieString = file_get_contents(__DIR__ . '/../Model/db.json');
-$movieList = json_decode($movieString, true);
+        // Inizializza un array vuoto per i film
+        $movies = [];
 
-// Inizializza un array vuoto per i film
-$movies = [];
-
-// Crea istanze della classe Movie per ogni elemento nella lista dei film
-foreach ($movieList as $item) {
-    $movies[] = new Movie($item['id'], $item['title'], $item['overview'], $item['vote_average'], $item['poster_path'], $item['original_language'], $item['genre_ids']);
+        foreach($movieList as $item) {
+            $price = Product::getDiscount();
+            $movies[] = new Movie($item['id'], $item['title'], $item['overview'], $item['vote_average'], $item['poster_path'], $item['original_language'], $item['genre_ids'], $price);
+        }
+        return $movies;
+    }
 }
 ?>

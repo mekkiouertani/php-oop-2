@@ -23,12 +23,12 @@ class Games extends Product {
         return "€".number_format($this->price, 2); //formatta il prezzo con due decimali e aggiungi il simbolo del dollaro
     }
     public static function fetchAll() {
-        $steamstring = file_get_contents(__DIR__."/../Model/steam_db.json");
-        $steamList = json_decode($steamstring, true);
+        $steamString = file_get_contents(__DIR__.'/../Model/steam_db.json');
+        $steamList = json_decode($steamString, true);
 
         $games = [];
         foreach($steamList as $value) {
-            $price = Product::getDiscount();
+            $price = self::getDiscount(); // Usa self::getDiscount() per ottenere lo sconto nella classe Games
             $games[] = new Games($value['appid'], $value['name'], $value['img_icon_url'], $price);
         }
         return $games;
