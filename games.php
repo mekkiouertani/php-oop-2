@@ -1,6 +1,6 @@
 <?php
-include __DIR__ . "/Views/header.php";
-include __DIR__ . "/Control/Games.php";
+include __DIR__."/Views/header.php";
+include __DIR__."/Control/Games.php";
 $games = Games::fetchAll();
 ?>
 
@@ -8,8 +8,8 @@ $games = Games::fetchAll();
     <div class="container">
         <div class="row">
             <?php
-            foreach ($games as $game) {
-                $game->printCard();
+            foreach($games as $game) {
+                $game->printCard($game->formatCard());
             }
             ?>
         </div>

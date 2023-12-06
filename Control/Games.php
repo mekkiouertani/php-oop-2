@@ -1,6 +1,8 @@
 <?php
 include __DIR__."/Product.php";
+include __DIR__."/../Traits/DrawCard.php";
 class Games extends Product {
+    use DrawCard;
     public int $appid;
     public string $name;
     public string $img_icon_url;
@@ -12,12 +14,19 @@ class Games extends Product {
         $this->img_icon_url = $img_icon_url;
     }
 
-    public function printCard() {
-        $title = $this->name;
-        $id = $this->appid;
-        $image = "https://cdn.cloudflare.steamstatic.com/steam/apps/{$id}/header.jpg";
-        $price = $this->getFormattedPrice();
-        include __DIR__."/../Views/card.php";
+    public function formatCard() {
+        $cardItem = [
+            "title" => $this->name,
+            "id" => $this->appid,
+            "image" => "https://cdn.cloudflare.steamstatic.com/steam/apps/{$this->appid}/header.jpg",
+            "price" => $this->getFormattedPrice()
+        ];
+        return $cardItem;
+        /*   $title = $this->name;
+          $id = $this->appid;
+          $image = "https://cdn.cloudflare.steamstatic.com/steam/apps/{$id}/header.jpg";
+          $price = $this->getFormattedPrice();
+          include __DIR__."/../Views/card.php"; */
     }
     private function getFormattedPrice() {
         return "€".number_format($this->price, 2); //formatta il prezzo con due decimali e aggiungi il simbolo del dollaro

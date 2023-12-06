@@ -1,6 +1,10 @@
 <?php
 include __DIR__."/Product.php";
+include __DIR__."/../Traits/DrawCard.php";
 class Movie extends Product {
+
+    use DrawCard;
+
     // Attributi privati della classe Movie
     private int $id;
     private string $title;
@@ -55,16 +59,27 @@ class Movie extends Product {
     }
 
     // Metodo per stampare la card del film
-    public function printCard() {
+    public function formatCard() {
         // Ottieni i dati necessari e includi il file di visualizzazione
-        $image = $this->poster_path;
-        $title = $this->title;
-        $content = substr($this->overview, 0, 100).'...';
-        $custom = $this->getVote();
-        $language = $this->getFlagApi();
-        $genre = $this->genre_ids;
-        $price = $this->getFormattedPrice();
-        include __DIR__.'/../Views/card.php';
+        $cardItem = [
+            'image' => $this->poster_path,
+            'title' => $this->title,
+            'content' => substr($this->overview, 0, 100).'...',
+            'custom' => $this->getVote(),
+            'poster_path' => $this->poster_path,
+            'language' => $this->getFlagApi(),
+            'genre_ids' => $this->genre_ids,
+            'price' => $this->getFormattedPrice(),
+        ];
+        return $cardItem;
+        /*  $image = $this->poster_path;
+         $title = $this->title;
+         $content = substr($this->overview, 0, 100).'...';
+         $custom = $this->getVote();
+         $language = $this->getFlagApi();
+         $genre = $this->genre_ids;
+         $price = $this->getFormattedPrice();
+         include __DIR__.'/../Views/card.php'; */
     }
 
     public static function fetchAll() {
