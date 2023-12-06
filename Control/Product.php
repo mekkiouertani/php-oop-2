@@ -9,7 +9,7 @@ class Product {
     }
 
     public static function getDiscount() {
-        $price = rand(5, 100);
+        $price = rand(80, 150);
         return $price;
     }
     public static function getQuantity() {

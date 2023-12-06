@@ -17,8 +17,11 @@ class Book extends Product {
         $this->authors = $authors;
         $this->categories = $categories;
     }
-    private function getFormattedPrice() {
-        return "€".number_format($this->price, 2); //formatta il prezzo con due decimali e aggiungi il simbolo del dollaro
+    public function getFormattedPrice() {
+        if($this->price < 100) {
+            throw new Exception("Il prezzo non può essere inferiore a 20");
+        }
+        return "€".number_format($this->price, 2);
     }
     public function formatCard() {
         $cardItem = [

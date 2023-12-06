@@ -1,6 +1,7 @@
 <?php
 include __DIR__."/Product.php";
 include __DIR__."/../Traits/DrawCard.php";
+include __DIR__."/../Control/Genre.php";
 class Movie extends Product {
 
     use DrawCard;
@@ -68,7 +69,7 @@ class Movie extends Product {
             'custom' => $this->getVote(),
             'poster_path' => $this->poster_path,
             'language' => $this->getFlagApi(),
-            'genre_ids' => $this->genre_ids,
+            'genre' => $this->genre_ids,
             'price' => $this->getFormattedPrice(),
         ];
         return $cardItem;

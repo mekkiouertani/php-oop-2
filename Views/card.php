@@ -25,12 +25,18 @@
                     </small>
                 </div>
                 <p>
-                    <?php if(isset($price)) {
+                    <?php try {
                         echo $price;
-                    }
-                    ; ?>
+                    } catch (Exception $e) {
+                        echo $e->getMessage();
+                    } ?>
                 </p>
             </div>
+            <small>
+
+                <?php // include __DIR__.'/../Control/Genre.php';
+                // echo $outString ?>
+            </small>
         </div>
     </div>
 </div>
