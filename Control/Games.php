@@ -28,8 +28,15 @@ class Games extends Product {
           $price = $this->getFormattedPrice();
           include __DIR__."/../Views/card.php"; */
     }
-    private function getFormattedPrice() {
-        return "€".number_format($this->price, 2); //formatta il prezzo con due decimali e aggiungi il simbolo del dollaro
+    public function getFormattedPrice() {
+        try {
+            if($this->price < 100) {
+                throw new Exception("Il prezzo non può essere inferiore a 100");
+            }
+            return "€".number_format($this->price, 2);
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
     public static function fetchAll() {
         $steamString = file_get_contents(__DIR__.'/../Model/steam_db.json');

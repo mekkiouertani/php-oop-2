@@ -27,8 +27,15 @@ class Movie extends Product {
         $this->original_language = $language;
         $this->genre_ids = $genre;
     }
-    private function getFormattedPrice() {
-        return "€".number_format($this->price, 2); //formatta il prezzo con due decimali e aggiungi il simbolo del dollaro
+    public function getFormattedPrice() {
+        try {
+            if($this->price < 100) {
+                throw new Exception("Il prezzo non può essere inferiore a 100");
+            }
+            return "€".number_format($this->price, 2);
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
     // Metodo per ottenere la bandiera del paese
     public function getFlagApi() {
